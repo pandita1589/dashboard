@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema Empresarial - Quick Start</title>
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #0f1114 0%, #1a1d23 100%);
+            color: #f7f9fb;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .container {
+            background: rgba(30, 34, 40, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 3rem;
+            max-width: 800px;
+            width: 100%;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+        }
+        
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #5b3ff9 0%, #7c5cfc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #8b949e;
+            margin-bottom: 3rem;
+        }
+        
+        .info-box {
+            background: rgba(91, 63, 249, 0.1);
+            border: 1px solid rgba(91, 63, 249, 0.3);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .info-box h3 {
+            color: #7c5cfc;
+            margin-bottom: 0.5rem;
+        }
+        
+        .users-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .user-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .user-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+        }
+        
+        .user-card h4 {
+            color: #f7f9fb;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .role-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .role-ceo {
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            color: #000;
+        }
+        
+        .role-admin {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: #fff;
+        }
+        
+        .role-employee {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: #fff;
+        }
+        
+        .credentials {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 0.5rem;
+            font-family: monospace;
+            font-size: 0.875rem;
+        }
+        
+        .credentials div {
+            margin: 0.25rem 0;
+            color: #c9d1d9;
+        }
+        
+        .btn-start {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #5b3ff9 0%, #7c5cfc 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.125rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-align: center;
+            box-shadow: 0 8px 24px rgba(91, 63, 249, 0.3);
+        }
+        
+        .btn-start:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px rgba(91, 63, 249, 0.4);
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .feature {
+            text-align: center;
+            padding: 1rem;
+        }
+        
+        .feature i {
+            font-size: 2rem;
+            color: #7c5cfc;
+            margin-bottom: 0.5rem;
+        }
+        
+        .feature h5 {
+            color: #f7f9fb;
+            margin-bottom: 0.25rem;
+        }
+        
+        .feature p {
+            color: #8b949e;
+            font-size: 0.875rem;
+        }
+        
+        /* Animación de fondo */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .floating {
+            position: fixed;
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle, rgba(91, 63, 249, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .floating:nth-child(1) {
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+        
+        .floating:nth-child(2) {
+            top: 60%;
+            right: 10%;
+            animation-delay: 2s;
+        }
+        
+        .floating:nth-child(3) {
+            bottom: 20%;
+            left: 20%;
+            animation-delay: 4s;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="floating"></div>
+    <div class="floating"></div>
+    <div class="floating"></div>
+    
+    <div class="container">
+        <h1>🚀 Sistema Empresarial</h1>
+        <p class="subtitle">Panel de gestión completo con múltiples roles y características</p>
+        
+        <div class="info-box">
+            <h3>⚡ Quick Start</h3>
+            <p>Este sistema está listo para usar. Solo necesitas elegir un usuario de prueba y hacer login.</p>
+        </div>
+        
+        <h3 style="margin-bottom: 1rem;">👥 Usuarios de Prueba</h3>
+        
+        <div class="users-grid">
+            <div class="user-card">
+                <h4><i class="fas fa-crown"></i> Director General</h4>
+                <span class="role-badge role-ceo">CEO</span>
+                <div class="credentials">
+                    <div>📧 ceo@empresa.com</div>
+                    <div>🔑 ceo123</div>
+                </div>
+                <p style="margin-top: 1rem; color: #8b949e; font-size: 0.875rem;">
+                    Acceso total al sistema, gestión de empleados, recepción de reportes
+                </p>
+            </div>
+            
+            <div class="user-card">
+                <h4><i class="fas fa-user-tie"></i> Juan Pérez</h4>
+                <span class="role-badge role-admin">Administración</span>
+                <div class="credentials">
+                    <div>📧 admin@empresa.com</div>
+                    <div>🔑 admin123</div>
+                </div>
+                <p style="margin-top: 1rem; color: #8b949e; font-size: 0.875rem;">
+                    Gestión de aliados, documentos, envío de reportes al CEO
+                </p>
+            </div>
+            
+            <div class="user-card">
+                <h4><i class="fas fa-code"></i> María García</h4>
+                <span class="role-badge role-employee">Programación</span>
+                <div class="credentials">
+                    <div>📧 dev@empresa.com</div>
+                    <div>🔑 dev123</div>
+                </div>
+                <p style="margin-top: 1rem; color: #8b949e; font-size: 0.875rem;">
+                    Gestión de tareas, proyectos, envío de reportes
+                </p>
+            </div>
+            
+            <div class="user-card">
+                <h4><i class="fas fa-headset"></i> Carlos López</h4>
+                <span class="role-badge role-employee">Soporte</span>
+                <div class="credentials">
+                    <div>📧 support@empresa.com</div>
+                    <div>🔑 support123</div>
+                </div>
+                <p style="margin-top: 1rem; color: #8b949e; font-size: 0.875rem;">
+                    Tickets, métricas de soporte, comunicación
+                </p>
+            </div>
+            
+            <div class="user-card">
+                <h4><i class="fas fa-database"></i> Ana Martín</h4>
+                <span class="role-badge role-employee">Database</span>
+                <div class="credentials">
+                    <div>📧 db@empresa.com</div>
+                    <div>🔑 db123</div>
+                </div>
+                <p style="margin-top: 1rem; color: #8b949e; font-size: 0.875rem;">
+                    Monitoreo de bases de datos, backups
+                </p>
+            </div>
+            
+            <div class="user-card">
+                <h4><i class="fas fa-palette"></i> Luis Rodríguez</h4>
+                <span class="role-badge role-employee">Diseño Gráfico</span>
+                <div class="credentials">
+                    <div>📧 design@empresa.com</div>
+                    <div>🔑 design123</div>
+                </div>
+                <p style="margin-top: 1rem; color: #8b949e; font-size: 0.875rem;">
+                    Proyectos de diseño, recursos visuales
+                </p>
+            </div>
+        </div>
+        
+        <a href="index.html" class="btn-start">
+            Ir al Sistema <i class="fas fa-arrow-right"></i>
+        </a>
+        
+        <div class="features">
+            <div class="feature">
+                <i class="fas fa-moon"></i>
+                <h5>Tema Claro/Oscuro</h5>
+                <p>Interfaz adaptable</p>
+            </div>
+            <div class="feature">
+                <i class="fas fa-exclamation-triangle"></i>
+                <h5>Sistema de Reportes</h5>
+                <p>4 niveles de prioridad</p>
+            </div>
+            <div class="feature">
+                <i class="fas fa-mobile-alt"></i>
+                <h5>Responsive</h5>
+                <p>Funciona en cualquier dispositivo</p>
+            </div>
+            <div class="feature">
+                <i class="fas fa-sparkles"></i>
+                <h5>Diseño Moderno</h5>
+                <p>UI/UX actualizada</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
