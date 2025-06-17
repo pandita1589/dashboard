@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Empleado - Sistema Empresarial</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()">
+        <i class="fas fa-moon" id="themeIcon"></i>
+    </button>
+    
+    <div class="dashboard-wrapper">
+        <!-- Sidebar Overlay for mobile -->
+        <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+        
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <img src="logo-empresa.png" alt="Logo" class="sidebar-logo">
+                <h2 id="deptTitle">Mi Departamento</h2>
+            </div>
+            
+            <div class="user-profile">
+                <div class="profile-pic-container">
+                    <img src="default-avatar.png" alt="Empleado" class="profile-pic" id="employeeProfilePic">
+                    <button class="change-pic-btn" onclick="document.getElementById('profilePicInput').click()">
+                        <i class="fas fa-camera"></i>
+                    </button>
+                    <input type="file" id="profilePicInput" accept="image/*" style="display: none;">
+                </div>
+                <h3 id="employeeName">Empleado</h3>
+                <p class="user-role" id="employeeDept">Departamento</p>
+            </div>
+            
+            <nav class="nav-menu">
+                <a href="#" class="nav-item active" data-section="overview">
+                    <i class="fas fa-home"></i>
+                    <span>Inicio</span>
+                </a>
+                <a href="#" class="nav-item" data-section="tasks">
+                    <i class="fas fa-tasks"></i>
+                    <span>Mis Tareas</span>
+                </a>
+                <a href="#" class="nav-item" data-section="calendar">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>Calendario</span>
+                </a>
+                <a href="#" class="nav-item" data-section="team">
+                    <i class="fas fa-users"></i>
+                    <span>Mi Equipo</span>
+                </a>
+                <a href="#" class="nav-item" data-section="resources">
+                    <i class="fas fa-folder"></i>
+                    <span>Recursos</span>
+                </a>
+                <a href="#" class="nav-item" data-section="profile">
+                    <i class="fas fa-user"></i>
+                    <span>Mi Perfil</span>
+                </a>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <a href="#" class="logout-btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Cerrar Sesión</span>
+                </a>
+            </div>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="main-header">
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h1 id="sectionTitle">Inicio</h1>
+                <div class="header-actions">
+                    <button class="header-btn">
+                        <i class="fas fa-bell"></i>
+                    </button>
+                </div>
+            </header>
+            
+            <!-- Overview Section -->
+            <section id="overview" class="content-section active">
+                <div class="welcome-message">
+                    <h2>¡Bienvenido, <span id="welcomeName">Usuario</span>!</h2>
+                    <p>Aquí está tu resumen del día</p>
+                </div>
+                
+                <div class="employee-stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                            <i class="fas fa-clipboard-check"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>Tareas Pendientes</h3>
+                            <p class="stat-number">5</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                            <i class="fas fa-calendar-day"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>Eventos Hoy</h3>
+                            <p class="stat-number">2</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                            <i class="fas fa-project-diagram"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>Proyectos Activos</h3>
+                            <p class="stat-number">3</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Department Specific Content -->
+                <div id="deptSpecificContent" class="dept-content">
+                    <!-- Contenido específico del departamento se cargará dinámicamente -->
+                </div>
+            </section>
+            
+            <!-- Tasks Section -->
+            <section id="tasks" class="content-section">
+                <div class="section-header">
+                    <h2>Mis Tareas</h2>
+                    <button class="btn-primary" onclick="openTaskModal()">
+                        <i class="fas fa-plus"></i>
+                        Nueva Tarea
+                    </button>
+                </div>
+                
+                <div class="tasks-container">
+                    <div class="task-column">
+                        <h3>Por Hacer</h3>
+                        <div class="task-list" id="todoTasks">
+                            <div class="task-card">
+                                <h4>Revisar documentación</h4>
+                                <p>Revisar y actualizar la documentación del proyecto</p>
+                                <span class="task-priority high">Alta prioridad</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="task-column">
+                        <h3>En Proceso</h3>
+                        <div class="task-list" id="inProgressTasks">
+                            <div class="task-card">
+                                <h4>Desarrollo de funcionalidad</h4>
+                                <p>Implementar nueva característica</p>
+                                <span class="task-priority medium">Media prioridad</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="task-column">
+                        <h3>Completadas</h3>
+                        <div class="task-list" id="completedTasks">
+                            <div class="task-card completed">
+                                <h4>Reunión de equipo</h4>
+                                <p>Asistir a la reunión semanal</p>
+                                <span class="task-priority low">Completada</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Calendar Section -->
+            <section id="calendar" class="content-section">
+                <div class="section-header">
+                    <h2>Calendario de Eventos</h2>
+                </div>
+                
+                <div class="events-list">
+                    <h3>Próximos Eventos</h3>
+                    <div id="employeeEventsList">
+                        <!-- Eventos se cargarán dinámicamente según el departamento -->
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Team Section -->
+            <section id="team" class="content-section">
+                <div class="section-header">
+                    <h2>Mi Equipo</h2>
+                </div>
+                
+                <div class="team-grid" id="teamGrid">
+                    <!-- Miembros del equipo se cargarán dinámicamente -->
+                </div>
+            </section>
+            
+            <!-- Resources Section -->
+            <section id="resources" class="content-section">
+                <div class="section-header">
+                    <h2>Recursos del Departamento</h2>
+                </div>
+                
+                <div id="deptResources" class="resources-grid">
+                    <!-- Recursos específicos del departamento -->
+                </div>
+            </section>
+            
+            <!-- Profile Section -->
+            <section id="profile" class="content-section">
+                <div class="section-header">
+                    <h2>Mi Perfil</h2>
+                </div>
+                
+                <div class="profile-form">
+                    <form id="profileForm">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>Nombre Completo</label>
+                                <input type="text" id="profileName" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" id="profileEmail" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label>Departamento</label>
+                                <input type="text" id="profileDept" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label>Teléfono</label>
+                                <input type="tel" id="profilePhone" placeholder="+1234567890">
+                            </div>
+                            <div class="form-group">
+                                <label>Biografía</label>
+                                <textarea id="profileBio" rows="3" placeholder="Cuéntanos sobre ti..."></textarea>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn-primary">Guardar Cambios</button>
+                    </form>
+                </div>
+            </section>
+        </main>
+    </div>
+    
+    <!-- Task Modal -->
+    <div id="taskModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Nueva Tarea</h2>
+                <button class="modal-close" onclick="closeTaskModal()">&times;</button>
+            </div>
+            <form id="taskForm">
+                <div class="form-group">
+                    <label>Título</label>
+                    <input type="text" name="title" required>
+                </div>
+                <div class="form-group">
+                    <label>Descripción</label>
+                    <textarea name="description" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Prioridad</label>
+                    <select name="priority" required>
+                        <option value="low">Baja</option>
+                        <option value="medium">Media</option>
+                        <option value="high">Alta</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Fecha límite</label>
+                    <input type="date" name="deadline">
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" onclick="closeTaskModal()">Cancelar</button>
+                    <button type="submit" class="btn-primary">Crear Tarea</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <script src="js/employee-dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Administración - Sistema Empresarial</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()">
+        <i class="fas fa-moon" id="themeIcon"></i>
+    </button>
+    
+    <div class="dashboard-wrapper">
+        <!-- Sidebar Overlay for mobile -->
+        <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+        
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <img src="logo-empresa.png" alt="Logo" class="sidebar-logo">
+                <h2>Administración</h2>
+            </div>
+            
+            <div class="user-profile">
+                <div class="profile-pic-container">
+                    <img src="default-avatar.png" alt="Admin" class="profile-pic" id="adminProfilePic">
+                    <button class="change-pic-btn" onclick="document.getElementById('profilePicInput').click()">
+                        <i class="fas fa-camera"></i>
+                    </button>
+                    <input type="file" id="profilePicInput" accept="image/*" style="display: none;">
+                </div>
+                <h3 id="adminName">Administrador</h3>
+                <p class="user-role">Administración</p>
+            </div>
+            
+            <nav class="nav-menu">
+                <a href="#" class="nav-item active" data-section="overview">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Vista General</span>
+                </a>
+                <a href="#" class="nav-item" data-section="partners">
+                    <i class="fas fa-handshake"></i>
+                    <span>Aliados</span>
+                </a>
+                <a href="#" class="nav-item" data-section="calendar">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>Calendario</span>
+                </a>
+                <a href="#" class="nav-item" data-section="documents">
+                    <i class="fas fa-file-alt"></i>
+                    <span>Documentos</span>
+                </a>
+                <a href="#" class="nav-item" data-section="profile">
+                    <i class="fas fa-user"></i>
+                    <span>Mi Perfil</span>
+                </a>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <a href="#" class="logout-btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Cerrar Sesión</span>
+                </a>
+            </div>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="main-header">
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h1 id="sectionTitle">Vista General</h1>
+                <div class="header-actions">
+                    <button class="header-btn">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge">2</span>
+                    </button>
+                </div>
+            </header>
+            
+            <!-- Overview Section -->
+            <section id="overview" class="content-section active">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>Aliados Activos</h3>
+                            <p class="stat-number" id="totalPartners">0</p>
+                            <span class="stat-change positive">+2 este mes</span>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                            <i class="fas fa-file-contract"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>Contratos</h3>
+                            <p class="stat-number">12</p>
+                            <span class="stat-change">Vigentes</span>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>Reuniones</h3>
+                            <p class="stat-number">5</p>
+                            <span class="stat-change">Esta semana</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="overview-grid">
+                    <div class="overview-card">
+                        <h2>Actividad Reciente</h2>
+                        <div class="activity-list">
+                            <div class="activity-item">
+                                <i class="fas fa-handshake"></i>
+                                <div>
+                                    <p>Nuevo aliado agregado: Tech Solutions</p>
+                                    <span>Hace 1 día</span>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <i class="fas fa-file-signature"></i>
+                                <div>
+                                    <p>Contrato renovado con Marketing Pro</p>
+                                    <span>Hace 3 días</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Partners Section -->
+            <section id="partners" class="content-section">
+                <div class="section-header">
+                    <div>
+                        <h2>Gestión de Aliados</h2>
+                        <p>Administra las alianzas estratégicas</p>
+                    </div>
+                    <button class="btn-primary" onclick="openPartnerModal()">
+                        <i class="fas fa-plus"></i>
+                        Nuevo Aliado
+                    </button>
+                </div>
+                
+                <div class="filters-bar">
+                    <div class="search-wrapper">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" placeholder="Buscar aliado..." class="search-input" id="searchPartner">
+                    </div>
+                    <select class="filter-select" id="filterPartnerType">
+                        <option value="">Todos los tipos</option>
+                        <option value="tecnologia">Tecnología</option>
+                        <option value="marketing">Marketing</option>
+                        <option value="logistica">Logística</option>
+                        <option value="financiero">Financiero</option>
+                    </select>
+                </div>
+                
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Empresa</th>
+                                <th>Contacto</th>
+                                <th>Email</th>
+                                <th>Teléfono</th>
+                                <th>Tipo</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="partnerTableBody">
+                            <!-- Aliados se cargarán dinámicamente -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            
+            <!-- Calendar Section -->
+            <section id="calendar" class="content-section">
+                <div class="section-header">
+                    <h2>Calendario de Eventos</h2>
+                </div>
+                
+                <div class="events-grid">
+                    <div class="event-card">
+                        <div class="event-date">
+                            <span class="day">15</span>
+                            <span class="month">NOV</span>
+                        </div>
+                        <div class="event-details">
+                            <h3>Reunión General</h3>
+                            <p><i class="fas fa-clock"></i> 10:00 AM</p>
+                            <p><i class="fas fa-users"></i> Todos los departamentos</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Documents Section -->
+            <section id="documents" class="content-section">
+                <div class="section-header">
+                    <div>
+                        <h2>Documentos</h2>
+                        <p>Gestión de documentos administrativos</p>
+                    </div>
+                    <button class="btn-primary">
+                        <i class="fas fa-upload"></i>
+                        Subir Documento
+                    </button>
+                </div>
+                
+                <div class="documents-grid">
+                    <div class="document-card">
+                        <i class="fas fa-file-pdf"></i>
+                        <h4>Manual de Procedimientos</h4>
+                        <p>Actualizado: 01/11/2024</p>
+                    </div>
+                    <div class="document-card">
+                        <i class="fas fa-file-excel"></i>
+                        <h4>Reporte Mensual</h4>
+                        <p>Actualizado: 15/11/2024</p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Profile Section -->
+            <section id="profile" class="content-section">
+                <div class="section-header">
+                    <h2>Mi Perfil</h2>
+                </div>
+                
+                <div class="profile-form">
+                    <form id="profileForm">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>Nombre Completo</label>
+                                <input type="text" id="profileName" value="Juan Pérez">
+                            </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" id="profileEmail" value="admin@empresa.com" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label>Teléfono</label>
+                                <input type="tel" id="profilePhone" placeholder="+1234567890">
+                            </div>
+                            <div class="form-group">
+                                <label>Departamento</label>
+                                <input type="text" value="Administración" readonly>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn-primary">Guardar Cambios</button>
+                    </form>
+                </div>
+            </section>
+        </main>
+    </div>
+    
+    <!-- Partner Modal -->
+    <div id="partnerModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Agregar Nuevo Aliado</h2>
+                <button class="modal-close" onclick="closePartnerModal()">&times;</button>
+            </div>
+            <form id="partnerForm">
+                <div class="form-group">
+                    <label>Nombre de la Empresa</label>
+                    <input type="text" name="company" required>
+                </div>
+                <div class="form-group">
+                    <label>Nombre del Contacto</label>
+                    <input type="text" name="contact" required>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label>Teléfono</label>
+                    <input type="tel" name="phone" required>
+                </div>
+                <div class="form-group">
+                    <label>Tipo de Alianza</label>
+                    <select name="type" required>
+                        <option value="">Seleccionar...</option>
+                        <option value="tecnologia">Tecnología</option>
+                        <option value="marketing">Marketing</option>
+                        <option value="logistica">Logística</option>
+                        <option value="financiero">Financiero</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Descripción</label>
+                    <textarea name="description" rows="3"></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" onclick="closePartnerModal()">Cancelar</button>
+                    <button type="submit" class="btn-primary">Agregar Aliado</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <script src="js/admin-dashboard.js"></script>
+</body>
+</html>

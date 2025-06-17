@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel CEO - Sistema Empresarial</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()">
+        <i class="fas fa-moon" id="themeIcon"></i>
+    </button>
+    
+    <div class="dashboard-wrapper">
+        <!-- Sidebar Overlay for mobile -->
+        <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+        
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <img src="logo-empresa.png" alt="Logo" class="sidebar-logo">
+                <h2>Panel CEO</h2>
+            </div>
+            
+            <div class="user-profile">
+                <div class="profile-pic-container">
+                    <img src="default-avatar.png" alt="CEO" class="profile-pic" id="ceoProfilePic">
+                    <button class="change-pic-btn" onclick="document.getElementById('profilePicInput').click()">
+                        <i class="fas fa-camera"></i>
+                    </button>
+                    <input type="file" id="profilePicInput" accept="image/*" style="display: none;">
+                </div>
+                <h3 id="ceoName">Director General</h3>
+                <p class="user-role">CEO</p>
+            </div>
+            
+            <nav class="nav-menu">
+                <a href="#" class="nav-item active" data-section="overview">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Vista General</span>
+                </a>
+                <a href="#" class="nav-item" data-section="employees">
+                    <i class="fas fa-users"></i>
+                    <span>Empleados</span>
+                </a>
+                <a href="#" class="nav-item" data-section="calendar">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>Calendario</span>
+                </a>
+                <a href="#" class="nav-item" data-section="departments">
+                    <i class="fas fa-building"></i>
+                    <span>Departamentos</span>
+                </a>
+                <a href="#" class="nav-item" data-section="reports">
+                    <i class="fas fa-file-alt"></i>
+                    <span>Reportes</span>
+                </a>
+                <a href="#" class="nav-item" data-section="settings">
+                    <i class="fas fa-cog"></i>
+                    <span>Configuración</span>
+                </a>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <a href="#" class="logout-btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Cerrar Sesión</span>
+                </a>
+            </div>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="main-header">
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h1 id="sectionTitle">Vista General</h1>
+                <div class="header-actions">
+                    <button class="header-btn" onclick="showMongoConfig()">
+                        <i class="fas fa-database"></i>
+                    </button>
+                    <button class="header-btn">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge">3</span>
+                    </button>
+                </div>
+            </header>
+            
+            <!-- Overview Section -->
+            <section id="overview" class="content-section active">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>Total Empleados</h3>
+                            <p class="stat-number" id="totalEmployees">0</p>
+                            <span class="stat-change positive">+12% este mes</span>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                            <i class="fas fa-building"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>Departamentos</h3>
+                            <p class="stat-number">5</p>
+                            <span class="stat-change">Activos</span>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>Eventos</h3>
+                            <p class="stat-number" id="upcomingEvents">0</p>
+                            <span class="stat-change">Próximos</span>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                            <i class="fas fa-chart-pie"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>Capacidad</h3>
+                            <p class="stat-number"><span id="currentCapacity">0</span>/50</p>
+                            <span class="stat-change"><span id="availableSlots">50</span> disponibles</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="overview-grid">
+                    <div class="overview-card">
+                        <h2>Actividad Reciente</h2>
+                        <div class="activity-list">
+                            <div class="activity-item">
+                                <i class="fas fa-user-plus"></i>
+                                <div>
+                                    <p>Nuevo empleado contratado</p>
+                                    <span>Hace 2 horas</span>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <i class="fas fa-calendar"></i>
+                                <div>
+                                    <p>Evento creado: Reunión General</p>
+                                    <span>Hace 5 horas</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="overview-card">
+                        <h2>Distribución por Departamento</h2>
+                        <canvas id="deptChart"></canvas>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Employees Section -->
+            <section id="employees" class="content-section">
+                <div class="section-header">
+                    <div>
+                        <h2>Gestión de Empleados</h2>
+                        <p>Administra tu equipo de trabajo</p>
+                    </div>
+                    <button class="btn-primary" onclick="openHireModal()">
+                        <i class="fas fa-plus"></i>
+                        Contratar Empleado
+                    </button>
+                </div>
+                
+                <div class="filters-bar">
+                    <div class="search-wrapper">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" placeholder="Buscar empleado..." class="search-input" id="searchEmployee">
+                    </div>
+                    <select class="filter-select" id="filterDepartment">
+                        <option value="">Todos los departamentos</option>
+                        <option value="Administración">Administración</option>
+                        <option value="Soporte">Soporte</option>
+                        <option value="Programación">Programación</option>
+                        <option value="Database">Database</option>
+                        <option value="Diseño Gráfico">Diseño Gráfico</option>
+                    </select>
+                </div>
+                
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Foto</th>
+                                <th>Nombre</th>
+                                <th>Email</th>
+                                <th>Departamento</th>
+                                <th>Fecha Ingreso</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="employeeTableBody">
+                            <!-- Empleados se cargarán dinámicamente -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            
+            <!-- Calendar Section -->
+            <section id="calendar" class="content-section">
+                <div class="section-header">
+                    <div>
+                        <h2>Calendario de Eventos</h2>
+                        <p>Gestiona los eventos de la empresa</p>
+                    </div>
+                    <button class="btn-primary" onclick="openEventModal()">
+                        <i class="fas fa-plus"></i>
+                        Nuevo Evento
+                    </button>
+                </div>
+                
+                <div class="calendar-container">
+                    <div class="calendar-header">
+                        <button class="calendar-nav" id="prevMonth"><i class="fas fa-chevron-left"></i></button>
+                        <h3 id="currentMonth">Noviembre 2024</h3>
+                        <button class="calendar-nav" id="nextMonth"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                    <div id="calendarGrid" class="calendar-grid">
+                        <!-- Calendario se generará dinámicamente -->
+                    </div>
+                </div>
+                
+                <div class="events-list">
+                    <h3>Próximos Eventos</h3>
+                    <div id="upcomingEventsList">
+                        <!-- Eventos se cargarán dinámicamente -->
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Departments Section -->
+            <section id="departments" class="content-section">
+                <div class="section-header">
+                    <h2>Departamentos</h2>
+                </div>
+                
+                <div class="departments-grid">
+                    <div class="department-card">
+                        <div class="dept-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                            <i class="fas fa-user-tie"></i>
+                        </div>
+                        <h3>Administración</h3>
+                        <p class="dept-count"><span id="adminCount">0</span> empleados</p>
+                    </div>
+                    
+                    <div class="department-card">
+                        <div class="dept-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <h3>Soporte</h3>
+                        <p class="dept-count"><span id="supportCount">0</span> empleados</p>
+                    </div>
+                    
+                    <div class="department-card">
+                        <div class="dept-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <h3>Programación</h3>
+                        <p class="dept-count"><span id="devCount">0</span> empleados</p>
+                    </div>
+                    
+                    <div class="department-card">
+                        <div class="dept-icon" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                            <i class="fas fa-database"></i>
+                        </div>
+                        <h3>Database</h3>
+                        <p class="dept-count"><span id="dbCount">0</span> empleados</p>
+                    </div>
+                    
+                    <div class="department-card">
+                        <div class="dept-icon" style="background: linear-gradient(135deg, #feca57 0%, #ff6b6b 100%);">
+                            <i class="fas fa-palette"></i>
+                        </div>
+                        <h3>Diseño Gráfico</h3>
+                        <p class="dept-count"><span id="designCount">0</span> empleados</p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Settings Section -->
+            <section id="settings" class="content-section">
+                <div class="section-header">
+                    <h2>Configuración</h2>
+                </div>
+                
+                <div class="settings-grid">
+                    <div class="settings-card">
+                        <h3>Configuración MongoDB</h3>
+                        <p>Configura la conexión a tu base de datos</p>
+                        <button class="btn-secondary" onclick="showMongoConfig()">
+                            <i class="fas fa-database"></i>
+                            Configurar MongoDB
+                        </button>
+                    </div>
+                    
+                    <div class="settings-card">
+                        <h3>Información de la Empresa</h3>
+                        <form id="companyInfoForm">
+                            <div class="form-group">
+                                <label>Nombre de la Empresa</label>
+                                <input type="text" id="companyName" placeholder="Mi Empresa S.A.">
+                            </div>
+                            <div class="form-group">
+                                <label>Logo de la Empresa</label>
+                                <input type="file" accept="image/*" id="companyLogo">
+                            </div>
+                            <button type="submit" class="btn-primary">Guardar Cambios</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    
+    <!-- Modals -->
+    <!-- Hire Employee Modal -->
+    <div id="hireModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Contratar Nuevo Empleado</h2>
+                <button class="modal-close" onclick="closeHireModal()">&times;</button>
+            </div>
+            <form id="hireForm">
+                <div class="form-group">
+                    <label>Nombre Completo</label>
+                    <input type="text" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label>Correo Electrónico</label>
+                    <input type="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label>Contraseña Temporal</label>
+                    <input type="password" name="password" required>
+                </div>
+                <div class="form-group">
+                    <label>Departamento</label>
+                    <select name="department" required>
+                        <option value="">Seleccionar...</option>
+                        <option value="Administración">Administración</option>
+                        <option value="Soporte">Soporte</option>
+                        <option value="Programación">Programación</option>
+                        <option value="Database">Database</option>
+                        <option value="Diseño Gráfico">Diseño Gráfico</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" onclick="closeHireModal()">Cancelar</button>
+                    <button type="submit" class="btn-primary">Contratar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Event Modal -->
+    <div id="eventModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Crear Nuevo Evento</h2>
+                <button class="modal-close" onclick="closeEventModal()">&times;</button>
+            </div>
+            <form id="eventForm">
+                <div class="form-group">
+                    <label>Título del Evento</label>
+                    <input type="text" name="title" required>
+                </div>
+                <div class="form-group">
+                    <label>Descripción</label>
+                    <textarea name="description" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Fecha y Hora</label>
+                    <input type="datetime-local" name="datetime" required>
+                </div>
+                <div class="form-group">
+                    <label>Departamento</label>
+                    <select name="department" required>
+                        <option value="all">Todos los departamentos</option>
+                        <option value="Administración">Administración</option>
+                        <option value="Soporte">Soporte</option>
+                        <option value="Programación">Programación</option>
+                        <option value="Database">Database</option>
+                        <option value="Diseño Gráfico">Diseño Gráfico</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" onclick="closeEventModal()">Cancelar</button>
+                    <button type="submit" class="btn-primary">Crear Evento</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- MongoDB Config Modal -->
+    <div id="mongoModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Configuración MongoDB</h2>
+                <button class="modal-close" onclick="closeMongoModal()">&times;</button>
+            </div>
+            <form id="mongoForm">
+                <div class="form-group">
+                    <label>URI de MongoDB</label>
+                    <input type="text" id="mongoUri" placeholder="mongodb://usuario:contraseña@host:puerto/database" required>
+                    <small>Ejemplo: mongodb://localhost:27017/sistema_empresarial</small>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" onclick="closeMongoModal()">Cancelar</button>
+                    <button type="submit" class="btn-primary">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <script src="js/ceo-dashboard.js"></script>
+</body>
+</html>
